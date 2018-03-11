@@ -1,5 +1,5 @@
 #!/bin/sh
-rm -rvf build
+rm -rf build
 rm -rf coverage*
 set -e
 mkdir build && cd build
