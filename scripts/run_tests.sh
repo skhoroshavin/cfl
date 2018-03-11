@@ -1,5 +1,6 @@
 #!/bin/sh
 rm -rf coverage*
+set -e
 mkdir test
 cd test
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCFL_GEN_COVERAGE=1 ../..

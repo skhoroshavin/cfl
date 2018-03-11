@@ -1,0 +1,15 @@
+language: c
+
+install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y -qq lcov curl valgrind
+
+matrix:
+  include:
+  - compiler: gcc
+  - compiler: clang
+
+script:
+  - cd scripts
+  - ./run_tests.sh
+  
