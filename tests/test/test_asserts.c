@@ -54,7 +54,7 @@ TEST_FAIL(cfl_fail_marks_test_as_failed_and_saves_formatted_message, FAIL("Forma
 TEST_ASSERT(assert, ASSERT(2 * 2 == 4), ASSERT(2 * 2 == 5), "Assertion failed: 2 * 2 == 5")
 
 static void *null_ptr = 0;
-static void *not_null_ptr = (void *)0xdeadbeef;
+static void *not_null_ptr = (void *)(size_t)0xdeadbeef;
 TEST_ASSERT(assert_null, ASSERT_NULL(null_ptr), ASSERT_NULL(not_null_ptr), "Assertion failed: not_null_ptr is not null")
 TEST_ASSERT(assert_not_null, ASSERT_NOT_NULL(not_null_ptr), ASSERT_NOT_NULL(null_ptr),
             "Assertion failed: null_ptr is null")
