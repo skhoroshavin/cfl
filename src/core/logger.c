@@ -29,9 +29,9 @@ static void cfl_buffer_logger_write(struct cfl_logger *base, const char *fmt, va
 
     if (self->buffer) {
         char *old_buffer = self->buffer;
-        unsigned old_size = strlen(old_buffer);
+        size_t old_size = strlen(old_buffer);
 
-        unsigned new_size = old_size + msg_len + 2;
+        size_t new_size = old_size + msg_len + 2;
         char *new_buffer = cfl_alloc(&cfl_default_allocator, new_size);
         self->buffer = new_buffer;
 
