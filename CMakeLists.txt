@@ -19,7 +19,9 @@ add_library(cfl_core
     src/core/logger.h
     src/core/logger.c)
 target_include_directories(cfl_core INTERFACE src)
-target_compile_options(cfl_core PRIVATE -Wall -Wextra -Werror)
+if(NOT MSVC)
+    target_compile_options(cfl_core PRIVATE -Wall -Wextra -Werror)
+endif(NOT MSVC)
 
 add_library(cfl_test
     src/test/context.h
@@ -29,7 +31,9 @@ add_library(cfl_test
     src/test/test.c)
 target_link_libraries(cfl_test PUBLIC cfl_core)
 target_include_directories(cfl_test INTERFACE src)
-target_compile_options(cfl_test PRIVATE -Wall -Wextra -Werror)
+if(NOT MSVC)
+    target_compile_options(cfl_test PRIVATE -Wall -Wextra -Werror)
+endif(NOT MSVC)
 
 add_executable(tests
     tests/test_common.h
@@ -44,4 +48,6 @@ add_executable(tests
     tests/test/test_asserts.c
     tests/test/test_test.c)
 target_link_libraries(tests cfl_test)
-target_compile_options(tests PRIVATE -Wall -Wextra -Werror)
+if(NOT MSVC)
+    target_compile_options(tests PRIVATE -Wall -Wextra -Werror)
+endif(NOT MSVC)
