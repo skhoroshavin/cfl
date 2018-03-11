@@ -1,10 +1,7 @@
 
 #include "logger.h"
-#include "memory.h"
 
-#include <stdarg.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 /*
@@ -40,10 +37,10 @@ static void cfl_buffer_logger_write(struct cfl_logger *base, const char *fmt, va
 
         memcpy(new_buffer, old_buffer, old_size);
         new_buffer += old_size;
-        vsprintf(new_buffer, fmt, args);
+        vsnprintf(new_buffer, msg_len+1, fmt, args);
         new_buffer += msg_len;
         *(new_buffer++) = '\n';
-        *(new_buffer++) = 0;
+        *new_buffer = 0;
 
         cfl_free(&cfl_default_allocator, old_buffer);
     } else {
@@ -51,10 +48,10 @@ static void cfl_buffer_logger_write(struct cfl_logger *base, const char *fmt, va
         char *new_buffer = cfl_alloc(&cfl_default_allocator, new_size);
         self->buffer = new_buffer;
 
-        vsprintf(new_buffer, fmt, args);
+        vsnprintf(new_buffer, msg_len+1, fmt, args);
         new_buffer += msg_len;
         *(new_buffer++) = '\n';
-        *(new_buffer++) = 0;
+        *new_buffer = 0;
     }
 }
 
