@@ -10,6 +10,7 @@ matrix:
   - compiler: clang
 
 script:
-  - cd scripts
-  - ./run_tests.sh
-  
+  - mkdir build && cd build
+  - cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+  - make
+  - valgrind --error-exitcode=1 ./tests

@@ -34,4 +34,4 @@ build:
   project: c:\projects\cfl\build\MSVC\cfl.sln
 
 test_script:
-  - tests
+  - c:\projects\cfl\build\MSVC\%configuration%\tests
