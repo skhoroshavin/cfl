@@ -1,19 +1,24 @@
 
 #include "string_list.h"
 #include <string.h>
+#include <stdio.h>
 
 struct cfl_string_list_node {
     struct cfl_list_node node;
     char *text;
 };
 
-static struct cfl_string_list_node *cfl_string_list_node_create(const char *text) {
-    size_t text_size = strlen(text) + 1;
+static struct cfl_string_list_node *cfl_string_list_node_create(const char *fmt, va_list args) {
+    va_list args_copy;
+    va_copy(args_copy, args);
+    size_t text_size = vsnprintf(0, 0, fmt, args_copy) + 1;
+    va_end(args_copy);
+
     size_t size = sizeof(struct cfl_string_list_node) + text_size;
 
     struct cfl_string_list_node *node = (struct cfl_string_list_node *) cfl_alloc(&cfl_default_allocator, size);
     node->text = (char *) node + sizeof(struct cfl_string_list_node);
-    memcpy(node->text, text, text_size);
+    vsnprintf(node->text, text_size, fmt, args);
 
     return node;
 }
@@ -43,7 +48,14 @@ int cfl_string_list_contains(const struct cfl_string_list *self, const char *tex
     return 0;
 }
 
-void cfl_string_list_append(struct cfl_string_list *self, const char *text) {
-    struct cfl_string_list_node *node = cfl_string_list_node_create(text);
+void cfl_string_list_vprintf(struct cfl_string_list *self, const char *fmt, va_list args) {
+    struct cfl_string_list_node *node = cfl_string_list_node_create(fmt, args);
     cfl_list_append(&self->list, &node->node);
+}
+
+void cfl_string_list_printf(struct cfl_string_list *self, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    cfl_string_list_vprintf(self, fmt, args);
+    va_end(args);
 }
