@@ -16,9 +16,8 @@ void cfl_test_engine_run_test(struct cfl_test_engine *self, const char *test_nam
     test_fn(&ctx);
     ++self->total_tests;
     if (ctx.result == CFL_TEST_FAIL) {
-        cfl_logger_write(self->logger, "Test failed");
-        cfl_logger_write(self->logger, test_name);
-        cfl_logger_write(self->logger, ctx.error);
+        cfl_logger_write(self->logger, "Failed: %s", test_name);
+        cfl_logger_write(self->logger, "%s", ctx.error);
         ++self->failed_tests;
     }
     cfl_test_context_done(&ctx);
