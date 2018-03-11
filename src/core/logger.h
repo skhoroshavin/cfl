@@ -19,7 +19,7 @@ void cfl_logger_write(struct cfl_logger *self, const char *fmt, ...) CFL_PRINTF;
 
 struct cfl_buffer_logger {
     struct cfl_logger base;
-    char *buffer;
+    struct cfl_string_list log;
 };
 void cfl_buffer_logger_init(struct cfl_buffer_logger *self);
 void cfl_buffer_logger_done(struct cfl_buffer_logger *self);

@@ -1,9 +1,8 @@
 
 #include "../test_common.h"
-#include <stdlib.h>
-#include <string.h>
 
 CFL_TEST(cfl_passing_test) { PASS(); }
+
 CFL_TEST(cfl_failing_test) { FAIL("Failure message"); }
 
 /*
@@ -26,7 +25,7 @@ CFL_TEST(cfl_test_engine_run_test_keeps_clean_status_and_logs_nothing_on_success
 
     cfl_test_engine_run_test(engine, "Passing test", cfl_passing_test);
     ASSERT_INT_EQ(engine->failed_tests, 0);
-    ASSERT_NULL(logger->buffer);
+    ASSERT(cfl_string_list_is_empty(&logger->log));
 }
 
 CFL_TEST(cfl_test_engine_run_test_raises_failure_and_logs_test_name_and_error_on_failure) {
@@ -35,9 +34,9 @@ CFL_TEST(cfl_test_engine_run_test_raises_failure_and_logs_test_name_and_error_on
 
     cfl_test_engine_run_test(engine, "Failing test", cfl_failing_test);
     ASSERT_INT_GREATER(engine->failed_tests, 0);
-    ASSERT_NOT_NULL(logger->buffer);
-    ASSERT_STR_CONTAINS(logger->buffer, "Failing test");
-    ASSERT_STR_CONTAINS(logger->buffer, "Failure message");
+    ASSERT(!cfl_string_list_is_empty(&logger->log));
+    ASSERT(cfl_string_list_contains(&logger->log, "Failing test"));
+    ASSERT(cfl_string_list_contains(&logger->log, "Failure message"));
 }
 
 CFL_TEST_GROUP(engine) {
@@ -57,8 +56,8 @@ CFL_TEST(cfl_test_main_returns_zero_and_reports_passing_tests_without_tests) {
     int return_code = cfl_test_main(0, 0, &logger->base, cfl_test_main_without_tests);
 
     ASSERT_INT_EQ(return_code, 0);
-    ASSERT_NOT_NULL(logger->buffer);
-    ASSERT_STR_CONTAINS(logger->buffer, "All 0 tests passed");
+    ASSERT(!cfl_string_list_is_empty(&logger->log));
+    ASSERT(cfl_string_list_contains(&logger->log, "All 0 tests passed"));
 }
 
 static void cfl_test_main_with_one_passing_test(struct cfl_test_engine *_engine) { CFL_RUN_TEST(cfl_passing_test); }
@@ -69,8 +68,8 @@ CFL_TEST(cfl_test_main_returns_zero_and_reports_passing_tests_with_passing_test)
     int return_code = cfl_test_main(0, 0, &logger->base, cfl_test_main_with_one_passing_test);
 
     ASSERT_INT_EQ(return_code, 0);
-    ASSERT_NOT_NULL(logger->buffer);
-    ASSERT_STR_CONTAINS(logger->buffer, "All 1 tests passed");
+    ASSERT(!cfl_string_list_is_empty(&logger->log));
+    ASSERT(cfl_string_list_contains(&logger->log, "All 1 tests passed"));
 }
 
 static void cfl_test_main_with_one_failing_test(struct cfl_test_engine *_engine) { CFL_RUN_TEST(cfl_failing_test); }
@@ -81,8 +80,8 @@ CFL_TEST(cfl_test_main_returns_one_and_reports_failing_tests_with_failing_test) 
     int return_code = cfl_test_main(0, 0, &logger->base, cfl_test_main_with_one_failing_test);
 
     ASSERT_INT_EQ(return_code, 1);
-    ASSERT_NOT_NULL(logger->buffer);
-    ASSERT_STR_CONTAINS(logger->buffer, "Failed 1 tests from 1 total tests");
+    ASSERT(!cfl_string_list_is_empty(&logger->log));
+    ASSERT(cfl_string_list_contains(&logger->log, "Failed 1 tests from 1 total tests"));
 }
 
 static void cfl_test_main_with_one_failing_test_followed_by_passing_test(struct cfl_test_engine *_engine) {
@@ -96,8 +95,8 @@ CFL_TEST(cfl_test_main_returns_one_and_reports_failing_tests_with_failing_test_f
     int return_code = cfl_test_main(0, 0, &logger->base, cfl_test_main_with_one_failing_test_followed_by_passing_test);
 
     ASSERT_INT_EQ(return_code, 1);
-    ASSERT_NOT_NULL(logger->buffer);
-    ASSERT_STR_CONTAINS(logger->buffer, "Failed 1 tests from 2 total tests");
+    ASSERT(!cfl_string_list_is_empty(&logger->log));
+    ASSERT(cfl_string_list_contains(&logger->log, "Failed 1 tests from 2 total tests"));
 }
 
 CFL_TEST_GROUP(main) {

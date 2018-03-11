@@ -1,6 +1,5 @@
 
 #include "test.h"
-#include <string.h>
 
 void cfl_test_engine_init(struct cfl_test_engine *self, struct cfl_logger *logger) {
     self->logger = logger;
@@ -10,7 +9,8 @@ void cfl_test_engine_init(struct cfl_test_engine *self, struct cfl_logger *logge
 
 void cfl_test_engine_done(struct cfl_test_engine *self) { cfl_unused(self); }
 
-void cfl_test_engine_run_test(struct cfl_test_engine *self, const char *test_name, void (*test_fn)(struct cfl_test_context *)) {
+void cfl_test_engine_run_test(struct cfl_test_engine *self, const char *test_name,
+                              void (*test_fn)(struct cfl_test_context *)) {
     struct cfl_test_context ctx;
     cfl_test_context_init(&ctx);
     test_fn(&ctx);
