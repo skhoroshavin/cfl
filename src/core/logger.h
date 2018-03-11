@@ -8,10 +8,10 @@
  */
 
 struct cfl_logger {
-    void (*write)(struct cfl_logger *self, const char *fmt, va_list args);
+    void (*vprintf)(struct cfl_logger *self, const char *fmt, va_list args);
 };
 
-void cfl_logger_write(struct cfl_logger *self, const char *fmt, ...) CFL_PRINTF;
+void cfl_logger_printf(struct cfl_logger *self, const char *fmt, ...) CFL_PRINTF;
 
 /*
  * CFL buffer logger

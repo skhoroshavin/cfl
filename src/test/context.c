@@ -2,8 +2,6 @@
 #include "context.h"
 #include "core/memory.h"
 
-#include <stdlib.h>
-
 void cfl_test_context_init(struct cfl_test_context *self) {
     self->result = CFL_TEST_SUCCESS;
     self->error = 0;

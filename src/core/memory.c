@@ -34,12 +34,12 @@ struct cfl_allocator cfl_default_allocator = {.realloc = cfl_default_allocator_r
 char *cfl_format_v(struct cfl_allocator *alloc, const char *fmt, va_list args) {
     va_list args_copy;
     va_copy(args_copy, args);
-    unsigned buf_size = vsnprintf(0, 0, fmt, args) + 1;
-    va_end(args);
+    unsigned buf_size = vsnprintf(0, 0, fmt, args_copy) + 1;
+    va_end(args_copy);
 
     char *buf = cfl_alloc(alloc, buf_size);
-    vsnprintf(buf, buf_size, fmt, args_copy);
-    va_end(args_copy);
+    vsnprintf(buf, buf_size, fmt, args);
+    va_end(args);
 
     return buf;
 }
