@@ -24,6 +24,8 @@ if (NOT MSVC)
 endif (NOT MSVC)
 
 add_library(cfl_test
+    src/test/fixture.h
+    src/test/fixture.c
     src/test/context.h
     src/test/context.c
     src/test/asserts.h
@@ -44,6 +46,7 @@ add_executable(tests
     tests/core/test_list.c
     tests/core/test_string_list.c
     tests/core/test_logger.c
+    tests/test/test_fixture.c
     tests/test/test_context.c
     tests/test/test_asserts.c
     tests/test/test_test.c)

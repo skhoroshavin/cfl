@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "fixture.h"
+
 enum cfl_test_result { CFL_TEST_SUCCESS, CFL_TEST_FAIL };
 
 typedef void (*cfl_test_teardown_fn)(void *);
