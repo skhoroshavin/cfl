@@ -11,6 +11,11 @@ void cfl_buffer_logger_teardown(struct cfl_buffer_logger *logger) {
     cfl_free(&cfl_default_allocator, logger);
 }
 
+void cfl_test_fixture_list_teardown(struct cfl_test_fixture_list *list) {
+    cfl_test_fixture_list_done(list);
+    cfl_free(&cfl_default_allocator, list);
+}
+
 void cfl_test_context_teardown(struct cfl_test_context *context) {
     cfl_test_context_done(context);
     cfl_free(&cfl_default_allocator, context);
