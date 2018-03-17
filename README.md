@@ -10,6 +10,7 @@
   - *string_list*: list of strings
   - *logger*: logger interface with default and buffer implementations
 - *test*: testing framework implementation
+  - *fixture*: test fixture object
   - *context*: test context object
   - *asserts*: different assert macros to be used in tests
   - *test*: main testing implementation
